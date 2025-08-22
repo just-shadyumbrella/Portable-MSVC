@@ -1,6 +1,8 @@
 name: Release
 on:
   push:
+    tags:
+      - '*'
   workflow_dispatch:
 
 concurrency:
@@ -26,7 +28,7 @@ jobs:
       - name: Pack MSVC to 7z
         run: |
           choco install 7zip.commandline -y
-          7z a MSVC.7z MSVC\*
+          7z a -mx9 MSVC.7z MSVC\*
 
       - name: Upload MSVC archives as release assets
         uses: softprops/action-gh-release@v2
