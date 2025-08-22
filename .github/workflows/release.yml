@@ -21,7 +21,7 @@ jobs:
         run: MSVC-Portable.bat
         
       - name: Pack MSVC to zip
-        run: powershell Compress-Archive -Path MSVC\* -DestinationPath MSVC.zip
+        run: powershell Compress-Archive -CompressionLevel Optimal -Path MSVC\* -DestinationPath MSVC.zip
 
       - name: Pack MSVC to 7z
         run: |
