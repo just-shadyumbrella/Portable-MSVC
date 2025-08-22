@@ -22,7 +22,7 @@ jobs:
 
       - name: Test
         shell: cmd
-        run: dir MSVC
+        run: tree MSVC
 
       # - name: Upload MSVC folder as release asset
       #   uses: softprops/action-gh-release@v2
