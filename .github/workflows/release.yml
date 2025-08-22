@@ -1,0 +1,32 @@
+name: Release
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: MSVC
+  cancel-in-progress: true
+
+jobs:
+  job:
+    name: My Job
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+
+      - name: Python
+        shell: cmd
+        run: MSVC-Portable.bat
+
+      - name: Test
+        shell: cmd
+        run: dir MSVC
+
+      # - name: Upload MSVC folder as release asset
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     files: MSVC/**
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
