@@ -16,17 +16,23 @@ jobs:
 
       - uses: actions/setup-python@v5
 
-      - name: Python
+      - name: Download MSVC
         shell: cmd
         run: MSVC-Portable.bat
+        
+      - name: Pack MSVC to zip
+        run: powershell Compress-Archive -Path MSVC\* -DestinationPath MSVC.zip
 
-      - name: Test
-        shell: cmd
-        run: tree MSVC
+      - name: Pack MSVC to 7z
+        run: |
+          choco install 7zip.commandline -y
+          7z a MSVC.7z MSVC\*
 
-      # - name: Upload MSVC folder as release asset
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     files: MSVC/**
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload MSVC archives as release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            MSVC.zip
+            MSVC.7z
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
